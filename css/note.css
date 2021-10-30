@@ -1,0 +1,32 @@
+#main_body {
+  width: 100vw;
+  height: auto;
+  min-height: 100vh;
+  display: flex;
+}
+
+#note_body {
+  width: 85vw;
+  height: auto;
+  min-height: 93vh;
+  position: absolute;
+  top: 7vh;
+  right: 0;
+  background-color: #ddd;
+}
+
+#note_body > section {
+  width: 95%;
+  margin: 30px auto 0 auto;
+  background-color: white;
+}
+
+#note_body > section > .note_title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+#note_body > section > ul {
+  margin-left: 5vw;
+}

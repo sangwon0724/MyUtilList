@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메인 화면</title>
+    <link rel="stylesheet" href="./css/index.css">
+    <script src="./jquery-3.5.1.js"></script>
+    <style></style>
+</head>
+<body id="main_body">
+    <nav id="nav">
+        <button id="openbtn" onclick="changeSidebar()">☰ Close Sidebar</button>
+    </nav>
+
+    <nav id="sidebar">
+        <button href="./html/converter.html">변환기</button>
+    </nav>
+    <section id="note_body">
+
+    </section>
+    <script>
+        //리모콘 작동
+        function move_section(event){
+            var section_id = event.target.value;
+            //location.href = "#" + section_id;
+            document.querySelector("#note_body > #"+section_id).scrollIntoView({behavior: 'smooth'});
+        }
+
+        $(document).ready(function(){
+            $("#sidebar>button").on("click", function(e){
+                $("#note_body").load($(e.target).attr("href"));
+                $("#remoteBtn").text("☰ Close Remote");
+
+                var tablinks = document.querySelectorAll("#sidebar > button");
+                for (i = 0; i < tablinks.length; i++) {
+                    tablinks[i].className = tablinks[i].className.replace(" active", "");
+                }
+                e.currentTarget.className += " active";
+            });
+        });
+
+        
+        $("#note_body > #remote> #remote_setcion > #remote_menu").on("change",move_section)
+
+        function changeSidebar(){
+            const text = $("#openbtn").text();
+            if(text === "☰ Close Sidebar"){
+                $("#sidebar").css("display","none");
+                $("#note_body").css("width","100vw");
+                $("#note_body").css("padding-left","7vw");
+                $("#openbtn").text("☰ Open Sidebar");
+            }
+            else if(text === "☰ Open Sidebar"){
+                $("#sidebar").css("display","flex");
+                $("#note_body").css("width","85vw");
+                $("#note_body").css("padding-left","0");
+                $("#openbtn").text("☰ Close Sidebar");
+            }
+        }
+
+        function changeRemote(){
+            const text = $("#remoteBtn").text();
+            if(text === "☰ Close Remote"){
+                $("#remote").css("visibility","hidden");
+                $("#remoteBtn").text("☰ Open Remote");
+            }
+            else if(text === "☰ Open Remote"){
+                $("#remote").css("visibility","");
+                $("#remoteBtn").text("☰ Close Remote");
+            }
+        }
+    </script>
+</body>
+</html>

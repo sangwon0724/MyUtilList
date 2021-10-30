@@ -1,0 +1,63 @@
+#nav {
+  width: 100vw;
+  height: 7vh;
+  position: fixed;
+  z-index: 7;
+  top: 0;
+  left: 0;
+  /* background-color: lightblue;
+  border-bottom: 1px solid #aaa; */
+}
+
+#openbtn,
+#remoteBtn {
+  width: 15vw;
+  height: 100%;
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #111;
+  color: white;
+  border: none;
+}
+
+#openbtn:hover,
+#remoteBtn:hover {
+  background-color: #444;
+}
+
+#sidebar {
+  width: 15vw;
+  height: auto;
+  min-height: 93vh;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin-top: 7vh;
+  z-index: 2;
+
+  float: left;
+  border-right: 1px solid #aaa;
+  background-color: #f1f1f1;
+}
+
+#sidebar > button {
+  display: block;
+  padding: 22px 16px;
+  width: 100%;
+  border: none;
+  outline: none;
+  text-align: left;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+#sidebar > button:hover {
+  background-color: #ddd;
+}
+
+#sidebar > button.active {
+  background-color: #ccc;
+}
