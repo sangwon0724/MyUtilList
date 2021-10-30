@@ -1,5 +1,5 @@
 //리모콘 작동
-function move_section(event){
+function move_section(){
     var section_id = event.target.value;
     //location.href = "#" + section_id;
     document.getElementById(section_id).scrollIntoView({behavior: 'smooth'});

@@ -15,62 +15,16 @@
     </nav>
 
     <nav id="sidebar">
-        <button href="./html/converter.html">변환기</button>
+        <button onclick="loadPage('./html/converter.html')">변환기</button>
     </nav>
+
+    <!-- 페이지가 불러와지는 영역 -->
     <section id="note_body">
 
     </section>
-    <script>
-        //리모콘 작동
-        function move_section(event){
-            var section_id = event.target.value;
-            //location.href = "#" + section_id;
-            document.querySelector("#note_body > #"+section_id).scrollIntoView({behavior: 'smooth'});
-        }
-
-        $(document).ready(function(){
-            $("#sidebar>button").on("click", function(e){
-                $("#note_body").load($(e.target).attr("href"));
-                $("#remoteBtn").text("☰ Close Remote");
-
-                var tablinks = document.querySelectorAll("#sidebar > button");
-                for (i = 0; i < tablinks.length; i++) {
-                    tablinks[i].className = tablinks[i].className.replace(" active", "");
-                }
-                e.currentTarget.className += " active";
-            });
-        });
-
-        
-        $("#note_body > #remote> #remote_setcion > #remote_menu").on("change",move_section)
-
-        function changeSidebar(){
-            const text = $("#openbtn").text();
-            if(text === "☰ Close Sidebar"){
-                $("#sidebar").css("display","none");
-                $("#note_body").css("width","100vw");
-                $("#note_body").css("padding-left","7vw");
-                $("#openbtn").text("☰ Open Sidebar");
-            }
-            else if(text === "☰ Open Sidebar"){
-                $("#sidebar").css("display","flex");
-                $("#note_body").css("width","85vw");
-                $("#note_body").css("padding-left","0");
-                $("#openbtn").text("☰ Close Sidebar");
-            }
-        }
-
-        function changeRemote(){
-            const text = $("#remoteBtn").text();
-            if(text === "☰ Close Remote"){
-                $("#remote").css("visibility","hidden");
-                $("#remoteBtn").text("☰ Open Remote");
-            }
-            else if(text === "☰ Open Remote"){
-                $("#remote").css("visibility","");
-                $("#remoteBtn").text("☰ Close Remote");
-            }
-        }
-    </script>
+    
+    <script src="./remote.js"></script>
+    <script src="./util.js"></script>
+    <script src="./js/converter.js"></script>
 </body>
 </html>

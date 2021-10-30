@@ -14,7 +14,7 @@
             <span>변환할 문자열</span>
             <textarea id="encodingTarget_UTF8"></textarea>
             <span>결과물</span>
-            <textarea id="encodingResult_UTF8"></textarea>
+            <textarea id="encodingResult_UTF8" readonly></textarea>
             <button onclick="encodingUTF8()">Encoding</button>
         </main>
     </section>
@@ -27,20 +27,18 @@
             <span>변환할 문자열</span>
             <textarea id="decodingTarget_UTF8"></textarea>
             <span>결과물</span>
-            <textarea id="decodingResult_UTF8"></textarea>
+            <textarea id="decodingResult_UTF8" readonly></textarea>
             <button onclick="decodingUTF8()">Decoding</button>
         </main>
     </section>
 
     <div id="remote">
         <section id="remote_setcion">
-            <select id="remote_menu">
+            <select id="remote_menu" onchange="move_section()">
                 <option value="encodingToUTF8">UTF-8 인코더</option>
                 <option value="decodingToUTF8">UTF-8 디코더</option>
             </select>
         </section>
     </div>
-    <script src="./remote.js"></script>
-    <script src="../js/converter.js"></script>
 </body>
 </html>
