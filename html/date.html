@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>날짜</title>
+        <link rel="stylesheet" href="./css/index.css" />
+    </head>
+    <body>
+        <section id="calendar">
+            <header class="note_title">캘린더</header>
+            <main>
+                <div id="calendar_content">
+                    <header id="calendar_header">
+                        <button id="calendar_left" onclick="calendar_left()">◀</button>
+                        <span id="calendar_info">yyyy년 mm월</span>
+                        <button id="calendar_right" onclick="calendar_right()">▶</button>
+                    </header>
+                    <main id="calendar_main">
+                        <table id="calendar_table">
+                            <thead>
+                                <tr>
+                                    <td>일</td>
+                                    <td>월</td>
+                                    <td>화</td>
+                                    <td>수</td>
+                                    <td>목</td>
+                                    <td>금</td>
+                                    <td>토</td>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </main>
+                </div>
+                <br>
+            </main>
+        </section>
+
+        <div id="remote">
+            <section id="remote_setcion">
+                <select id="remote_menu" onchange="move_section()">
+                    <option value="calendar">캘린더</option>
+                </select>
+            </section>
+        </div>
+    </body>
+
+    <!-- 해당 페이지 클릭시 캘린더가 그려져야 하기 때문에 현재 페이지에 명시 -->
+    <script src="../js/date.js"></script>
+</html>
