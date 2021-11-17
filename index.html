@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>메인 화면</title>
     <link rel="stylesheet" href="./css/index.css">
-    <script src="./jquery-3.5.1.js"></script>
-    <style></style>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 </head>
 <body id="main_body">
     <nav id="nav">
@@ -16,6 +17,7 @@
 
     <nav id="sidebar">
         <button onclick="loadPage('./html/converter.html')">변환기</button>
+        <button onclick="loadPage('./html/date.html')">날짜</button>
     </nav>
 
     <!-- 페이지가 불러와지는 영역 -->
@@ -25,6 +27,7 @@
     
     <script src="./remote.js"></script>
     <script src="./util.js"></script>
+
     <script src="./js/converter.js"></script>
 </body>
 </html>

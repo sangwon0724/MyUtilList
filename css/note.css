@@ -1,3 +1,4 @@
+/* 공통 */
 #main_body {
   width: 100vw;
   height: auto;
@@ -29,4 +30,67 @@
 
 #note_body > section > ul {
   margin-left: 5vw;
+}
+
+/* 캘린더용 */
+
+/* 캘린더 영역 전체 */
+#calendar_content {
+  width: 70vw;
+  height: auto;
+  border: 1px solid black;
+  margin: 0 auto;
+}
+
+/* 캘린더 Header (연도, 월, 일) */
+#calendar_header {
+}
+/* 캘린더 main (테이블을 감싸는 영역) */
+#calendar_main {
+}
+/* 캘린더 table (실제 캘린더 표시 영역) */
+#calendar_table {
+  width: 100%;
+  height: auto;
+  background-color: white;
+}
+#calendar_table > thead > tr {
+  width: 100%;
+  height: 3vh;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: 1fr;
+  background-color: #eeeeee;
+}
+#calendar_table > thead > tr > td {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#calendar_table > tbody > tr {
+  width: 100%;
+  height: 7vh;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: 1fr;
+}
+#calendar_table > tbody > tr > td {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#calendar_table > tbody > tr > td.empty {
+  background-color: gray;
+}
+/* 오늘 날짜 */
+.today {
+  background-color: #6c5ce7;
+}
+/* 토요일 */
+.saturday {
+  color: blue;
+}
+/* 일요일 */
+.sunday {
+  color: red;
 }
