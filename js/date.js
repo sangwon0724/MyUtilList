@@ -8,6 +8,12 @@ let today_year = today.getFullYear(); // 연도
 let today_month = today.getMonth();  // 월 (0~11)
 let today_date = today.getDate();  // 날짜
 
+let schedule_start=1; //일정 시작 체크값, 해당 주가 시작하는 날짜
+let schedule_end; //일정 종료 체크값, 해당 주가 종료되는 날짜
+
+//일정 테스트용
+let schedule_test = [{start:"2021-11-01",end:"2021-11-05"}, {start:"2021-11-17",end:"2021-11-19"}, {start:"2021-11-25",end:"2021-12-07"}];
+
 //캘린더 생성
 function init_calendar(){
     //해당 달의 첫째날과 마지막날
@@ -26,7 +32,7 @@ function init_calendar(){
     for(let week_loop = 1; week_loop <= totalWeek; week_loop++){
         calendar += `<tr>`; //tr 열기
 
-        //1일 단위로 돌리기
+        //1일 단위로 돌리기 - 날짜용
         for(let day_loop = 0; day_loop < 7; day_loop++){
             //1주차와 마지막 주차에 대한 빈 칸용
             if(week_loop === 1 && firstDay !== 0 && day_loop < firstDay){
@@ -48,6 +54,33 @@ function init_calendar(){
                 else if (day_loop === 6) calendar += ` saturday`;
 
                 calendar += `">${day_check}</td>`; //td 닫기
+
+                //일정 목록 추가
+                if(day_loop === 6){
+                    schedule_end = day_check; //해당 주의 마지막날 (캘린더 모양상 토요일)
+
+                    let week_start = new Date(year+"-"+month+"-"+schedule_start); //한주가 시작하는 시점 (빈 칸 제외)
+                    let week_end = new Date(year+"-"+month+"-"+schedule_end); //한주가 종료되는 시점
+
+                    //일정 배열 돌리기
+                    schedule_test.forEach(schedule => {
+                        let start = new Date(schedule.start);
+                        let end = new Date(schedule.end);
+
+                        /*
+                            let btMs = endDate.getTime()-stDate.getTime();
+                            let btDay = btMs / (1000*60*60*24);
+                        */
+                        if(week_start<=start && week_end>=end){
+                            //1일 단위로 돌리기 - 일정용
+                            for(let i = schedule_start; i <= schedule_end; i++){
+                                
+                            }
+                        }
+                    });
+
+                    schedule_start = day_check + 1;
+                }
                 
                 day_check++;
             }
