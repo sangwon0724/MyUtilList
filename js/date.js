@@ -11,8 +11,8 @@ let today_date = today.getDate();  // 날짜
 //일정 테스트용
 let schedule_test
     = [
-        {name:"first",start:"2021-11-01",end:"2021-11-05",color:"green"},
-        {name:"second",start:"2021-11-17",end:"2021-11-19",color:"blue"},
+        {name:"first",start:"2021-11-01",end:"2021-11-08",color:"green"},
+        {name:"second",start:"2021-11-17",end:"2021-11-21",color:"blue"},
         {name:"third",start:"2021-11-25",end:"2021-12-07",color:"red"}
     ];
 
@@ -43,11 +43,11 @@ function init_calendar(){
             //1주차와 마지막 주차에 대한 빈 칸용
             if(week_loop === 1 && firstDay !== 0 && day_loop < firstDay){
                 //1주차 전용
-                calendar += `<td></td>`;
+                calendar += `<td class="empty"></td>`;
             }
             else if (week_loop === totalWeek && day_check>totalDate){
                 //마지막 주차
-                calendar += `<td></td>`;
+                calendar += `<td class="empty"></td>`;
             }
             else{
                 calendar += `<td class="`; //td 열기
@@ -69,152 +69,83 @@ function init_calendar(){
         
         //일정 목록 추가
         schedule_end = day_check-1; //해당 주의 마지막날 (캘린더 모양상 토요일)
-        
-        let week_start = new Date(year+"-"+(month+1)+"-"+(firstDate.getDay()+7*(week_loop-1))); //한주가 시작하는 시점 (빈 칸 제외)
+
+        //해당 주의 첫째날과 마지막날
+        let week_start = new Date(year+"-"+(month+1)+"-"+((week_loop-1)*7 + 1 - firstDate.getDay())); //한주가 시작하는 시점 (빈 칸 제외)
         if(week_loop === 1){week_start = firstDate;}
-        console.log("day_check : ",day_check);
-        let week_end = new Date(year+"-"+(month+1)+"-"+(((6-firstDate.getDay())+firstDate.getDate())+7*(week_loop-1))); //한주가 종료되는 시점
+        let week_end = new Date(year+"-"+(month+1)+"-"+(week_loop*7 - firstDate.getDay())); //한주가 종료되는 시점
         if(week_loop === totalWeek){week_end = lastDate;}
-
-        console.log("week_start : ",week_start);
-        console.log("week_end : ",week_end);
-
 
         //일정 배열 돌리기
         schedule_test.forEach(schedule => {
             let schedule_start = new Date(schedule.start);
             let schedule_end = new Date(schedule.end);
-            //let schedule_length = (schedule_end.getTime()-schedule_start.getTime()) / (1000*60*60*24) + 1; //스케쥴 길이, 날짜의 차이라서 + 1
+            console.log("======================"+schedule.name+"============================");//임시
             calendar += `<tr class="schedule">`; //스케쥴 tr 열기
 
-            /*console.log("schedule_start : ",schedule_start);
-            console.log("schedule_end : ",schedule_end);
-            //console.log("schedule_length : ",schedule_length);
-            console.log("lastDate : ",lastDate);*/
+            let merch_check=true; //합치기 체크용
 
-            calendar += `<tr class="schedule">`; //스케쥴 tr 열기
+            //합칠 칸의 길이
+            let merge_length=0;
+            for(let jj = week_start.getDate(); jj <= week_end.getDate(); jj++){
+                //요일에 따른 값 체크
+                let checkDateStr;
+                if(jj<10) checkDateStr = year+"-"+(month+1)+"-0"+jj;
+                else checkDateStr = year+"-"+(month+1)+"-"+jj;
+                
+                let checkDate = new Date(checkDateStr); //체크용 날짜
 
-            //캘린터의 빈 칸 처리
-            if(week_start <= schedule_start && schedule_start <= week_end){
-                for(let i = 0; i < week_start.getDay(); i++){
-                    calendar += `<td></td>`; //빈 그래프 추가
+                //스케쥴 시작일 <= 체크용 날짜 <= 스케쥴 종료일
+                if(schedule_start <= checkDate && checkDate <= schedule_end){
+                    merge_length++;
                 }
             }
 
+            //앞쪽의 빈 칸 채우기
+            if(week_start.getDay() > 0){
+                for(let i = 0; i < week_start.getDay(); i++){
+                    calendar += `<td class="empty_front"></td>`; //빈 그래프 추가
+                }
+            }
+
+            var line_check=week_start.getDate(); //합치기때문에 생기는 오류 방지용
             //칸 채우기
             for(let j = week_start.getDate(); j <= week_end.getDate(); j++){
                 //요일에 따른 값 체크
                 let checkDateStr;
                 if(j<10) checkDateStr = year+"-"+(month+1)+"-0"+j;
                 else checkDateStr = year+"-"+(month+1)+"-"+j;
-                console.log("checkDateStr : "+checkDateStr);
-                let checkDate = new Date(checkDateStr);
-                console.log("checkDate : "+checkDate);
-                console.log("schedule_start : ",schedule_start);
-                console.log(schedule_start <= checkDate);
-                console.log(checkDate <= schedule_end);
+                
+                let checkDate = new Date(checkDateStr); //체크용 날짜
 
-                if(schedule_start.getDay)
-                if(schedule_start <= checkDate && checkDate <= schedule_end){
-                    calendar += `<td style="background-color:${schedule.color};"></td>`; //색상 그래프 추가
+                //스케쥴 시작일 <= 체크용 날짜 <= 스케쥴 종료일
+                if(schedule_start <= checkDate && checkDate <= schedule_end && merch_check){
+                    //색상 그래프 추가
+                    calendar += `<td style="background-color:${schedule.color}; grid-column: span ${merge_length};" class="schedule_name_${schedule.name}"><span>${schedule.name}</span></td>`;
+                    merch_check=false;
+                    line_check+=+merge_length;
                 }
                 else{
-                    calendar += `<td></td>`; //빈 그래프 추가
+                    //빈 그래프 추가
+                    if(line_check<=week_end.getDate()){
+                        //빈 그래프 추가
+                        if(checkDate.getFullYear()===today.getFullYear() && checkDate.getMonth()===today.getMonth() && checkDate.getDate()===today.getDate()) calendar += `<td class="today"></td>`; //오늘인 경우에 대한 처리 추가
+                        else calendar += `<td></td>`;
+                    }
+                    line_check++;
+                }
+            }
+
+            //뒤쪽의 빈 칸 채우기
+            if(week_end.getDay()<6){
+                for(let k = 0; k < 6-week_end.getDay(); k++){
+                    calendar += `<td class="empty_back"></td>`; //빈 그래프 추가
                 }
             }
 
             calendar += `</tr>`; //스케쥴 tr 닫기
-
-            //스케쥴 종류
-            //1. 일주일 안에 해결되는 경우
-            /*if(week_start<=schedule_start && week_end>=schedule_end){
-
-                calendar += `<tr class="schedule">`; //스케쥴 tr 열기
-
-                //1일 단위로 돌리기 - 일정용
-                for(let i = 0; i <= 6; i++){
-                    //요일에 따른 값 체크
-                    if(schedule_start.getDay()<=i && i<=schedule_end.getDay()){
-                        calendar += `<td style="background-color:${schedule.color};"></td>`; //색상 그래프 추가
-                    }
-                    else{
-                        calendar += `<td></td>`; //빈 그래프 추가
-                    }
-                }
-
-                calendar += `</tr>`; //스케쥴 tr 닫기
-            }
-            //2. 2주 이상으로 걸치는 경우
-            //(1) 스케쥴 시작일의 요일에 (스케쥴 길이-1)을 더한 것이 6보다 큰 경우
-            //(2) 스케쥴 길이가 7일 이상
-            if((schedule_start.getDay()+(schedule_length-1)>6) || schedule_length>7){
-
-                console.log("schedule_start : ",schedule_start);
-                console.log("schedule_end : ",schedule_end);
-                console.log("schedule_length : ",schedule_length);
-                console.log("week_start : ",week_start);
-                console.log("week_end : ",week_end);
-                console.log("lastDate : ",lastDate);
-
-                calendar += `<tr class="schedule">`; //스케쥴 tr 열기
-
-                for(let i = week_start.getDate(); i <= week_end.getDate(); i++){
-                    //요일에 따른 값 체크
-                    let checkDate = new Date(year+"-"+(month+1)+"-"+i);
-                    console.log("checkDate : "+checkDate);
-
-                    if(schedule_start <= checkDate &&  checkDate <= schedule_end){
-                        calendar += `<td style="background-color:${schedule.color};"></td>`; //색상 그래프 추가
-                    }
-                    else{
-                        calendar += `<td></td>`; //빈 그래프 추가
-                    }
-                }
-
-                //2-1. 시작일 ~ 해당 주의 토요일 (스케쥴의 시작일 <= 해당 주의 종료일), 마지막 주 이전
-                if(schedule_start<=week_end && week_loop < totalWeek){
-                    console.log("A");
-                    for(let i = 0; i <= 6; i++){
-                        //요일에 따른 값 체크
-                        if(schedule_start.getDay()<=i && schedule_start.getMonth() === schedule_end.getMonth()){
-                            calendar += `<td style="background-color:${schedule.color};"></td>`; //색상 그래프 추가
-                        }
-                        else{
-                            calendar += `<td></td>`; //빈 그래프 추가
-                        }
-                    }
-                }
-                //2-2. 다음주의 일요일 ~ 종료일 (해당 주의 시작일 <= 스케쥴의 종료일 <= 해당 주의 종료일), 달이 바뀌지 않는 경우
-                else if(week_start <= schedule_end && schedule_end <= week_end){
-                    console.log("B");
-                    for(let i = 0; i <= 6; i++){
-                        //요일에 따른 값 체크
-                        if(schedule_end.getDay()>=i){
-                            calendar += `<td style="background-color:${schedule.color};"></td>`; //색상 그래프 추가
-                        }
-                        else{
-                            calendar += `<td></td>`; //빈 그래프 추가
-                        }
-                    }
-                }
-                //2-3. 달이 바뀌지 않는 경우 (스케쥴 종료일 > 해당 달 마지막날), 마지막 주
-                else if(schedule_end > lastDate && week_loop === totalWeek){
-                    console.log("C");
-                    for(let i = 0; i <= 6; i++){
-                        //요일에 따른 값 체크
-                        if(schedule_end.getDay()>=i){
-                            calendar += `<td style="background-color:${schedule.color};"></td>`; //색상 그래프 추가
-                        }
-                        else{
-                            calendar += `<td></td>`; //빈 그래프 추가
-                        }
-                    }
-                }
-
-                calendar += `</tr>`; //스케쥴 tr 닫기
-            }*/
-
-        });
+            
+        }); //일정 배열 forEach문 종료
 
         schedule_start = day_check; //해당 주의 시작하는 날 (캘린더 모양상 일요일)
 
@@ -223,6 +154,7 @@ function init_calendar(){
 
     //캘린더 생성
     $("#calendar_table>tbody").html(calendar);
+
     //yyyy년 mm월 dd일 변경
     $("#calendar_info").html(`${year}년 ${month+1}월`);
 }//init_calendar 종료
