@@ -46,9 +46,7 @@
   width: 100%;
   height: 7vh;
 }
-/* 캘린더 main (테이블을 감싸는 영역) */
-#calendar_main {
-}
+
 /* 캘린더 table (실제 캘린더 표시 영역) */
 #calendar_table {
   width: 100%;
