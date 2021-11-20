@@ -34,7 +34,7 @@ function init_calendar(){
     
     //1주 단위로 돌리기
     for(let week_loop = 1; week_loop <= totalWeek; week_loop++){
-        console.log("=================================== "+week_loop+"주차 시작 ==================================="); //임시
+        //console.log("=================================== "+week_loop+"주차 시작 ==================================="); //임시
 
         calendar += `<tr>`; //tr 열기
 
@@ -80,7 +80,7 @@ function init_calendar(){
         schedule_test.forEach(schedule => {
             let schedule_start = new Date(schedule.start);
             let schedule_end = new Date(schedule.end);
-            console.log("======================"+schedule.name+"============================");//임시
+            //console.log("======================"+schedule.name+"============================");//임시
             calendar += `<tr class="schedule">`; //스케쥴 tr 열기
 
             let merch_check=true; //합치기 체크용
@@ -149,7 +149,7 @@ function init_calendar(){
 
         schedule_start = day_check; //해당 주의 시작하는 날 (캘린더 모양상 일요일)
 
-        console.log("=================================== "+week_loop+"주차 종료 ==================================="); //임시
+        //console.log("=================================== "+week_loop+"주차 종료 ==================================="); //임시
     }//1주 단위 for문 종료
 
     //캘린더 생성
@@ -157,6 +157,21 @@ function init_calendar(){
 
     //yyyy년 mm월 dd일 변경
     $("#calendar_info").html(`${year}년 ${month+1}월`);
+
+    //일정 목록
+    let calendar_list = ``;
+    schedule_test.forEach(schedule => {
+        calendar_list += `
+            <div class="line">
+                <div class="schedule_line_color">
+                    <div style="background-color : ${schedule.color};"></div>
+                </div>
+                <div class="schedule_line_name"><span>${schedule.name}</span></div>
+                <div class="schedule_line_date"><span>${schedule.start} ~ ${schedule.end}</span></div>
+            </div>
+        `;
+    });
+    $("#calendar_list").html(calendar_list);
 }//init_calendar 종료
 
 //초기화 실행
@@ -183,5 +198,59 @@ function calendar_right(){
         year += 1;
     }
 
+    init_calendar();
+}
+
+//스케쥴 추가
+function add_schedule(){
+    let schedule_name = $("#schedule_name").val();
+    let schedule_start = $("#schedule_start").val();
+    let schedule_end = $("#schedule_end").val();
+    let schedule_color = $("#schedule_color").val();
+
+    if(schedule_name === ""){
+        alert("일정의 이름을 입력해주시길 바랍니다.");
+        return;
+    }
+    else if(schedule_start === ""){
+        alert("일정의 시작일을 입력해주시길 바랍니다.");
+        return;
+    }
+    else if(schedule_end === ""){
+        alert("일정의 종료일을 입력해주시길 바랍니다.");
+        return;
+    }
+    else if(schedule_color === "#000000" || schedule_color === "#ffffff"){
+        alert("일정의 구분을 위해서 다른 색상을 선택해주시길 바랍니다.");
+        return;
+    }
+
+    let color_check=false; //색상 중복 체크
+
+    for(let i=0; i<schedule_test.length; i++){
+        console.log("비교값 색상 : "+schedule_test[i].color);
+        console.log("비교 결과 : "+(schedule_name === schedule_test[i].color));
+        if(schedule_color === schedule_test[i].color){
+            color_check=true;
+            break;
+        }
+    }
+    
+    if(color_check){
+        alert("이미 존재하는 색상입니다.\n구분을 위해 색을 변경해주시길 바랍니다.");
+        return;
+    }
+
+    //배열에 저장
+    schedule_test.push(
+        {
+            name : schedule_name,
+            start : schedule_start,
+            end : schedule_end,
+            color : schedule_color
+        }
+    );
+
+    //캘린더 그리기
     init_calendar();
 }
