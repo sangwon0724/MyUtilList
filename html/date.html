@@ -5,7 +5,6 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>날짜</title>
-        <link rel="stylesheet" href="./css/index.css" />
     </head>
     <body>
         <section id="calendar">
@@ -17,7 +16,7 @@
                         <span id="calendar_info">yyyy년 mm월</span>
                         <button id="calendar_right" onclick="calendar_right()">▶</button>
 
-                        [일정목록용 공간 (제작예정)]
+                        <button onclick="open_modal('add_schedule')">일정 추가</button>
                     </header>
                     <main id="calendar_main">
                         <table id="calendar_table">
@@ -36,6 +35,12 @@
                         </table>
                     </main>
                 </div>
+
+                <br>
+
+                <!-- 일정 목록 -->
+                <div id="calendar_list"></div>
+
                 <br>
             </main>
         </section>
@@ -49,6 +54,43 @@
                 </select>
             </section>
         </div>
+
+        <!-- 모달 영역 시작 -->
+        <div id="add_schedule" class="modal">
+            <div class="modal-content">
+                <span class="close">×</span>
+                <div class="modal_content">
+                    <table>
+                        <colgroup>
+                            <col width="20%">
+                            <col width="80%">
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <td>이름</td>
+                                <td><input type="text" id="schedule_name"></td>
+                            </tr>
+                            <tr>
+                                <td>시작일</td>
+                                <td><input type="date" id="schedule_start"></td>
+                            </tr>
+                            <tr>
+                                <td>종료일</td>
+                                <td><input type="date" id="schedule_end"></td>
+                            </tr>
+                            <tr>
+                                <td>색상</td>
+                                <td><input type="color" id="schedule_color"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><button onclick="add_schedule()">저장하기</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- 모달 영역 종료 -->
     </body>
 
     <!-- 해당 페이지 클릭시 캘린더가 그려져야 하기 때문에 현재 페이지에 명시 -->

@@ -32,7 +32,7 @@
   margin-left: 5vw;
 }
 
-/* 캘린더용 */
+/* =========================================== 캘린더용 =========================================== */
 
 /* 캘린더 영역 전체 */
 #calendar_content {
@@ -109,4 +109,37 @@ tr.schedule {
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: 1fr;
   background-color: white;
+}
+
+#calendar_list {
+  width: 70vw;
+  height: auto;
+  margin: 0 auto;
+}
+#calendar_list > .line {
+  width: 100%;
+  height: 3vh;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+#calendar_list > .line > div {
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+#calendar_list > .line > .schedule_line_color {
+  width: 2.5vw;
+  border-right: 50%;
+}
+#calendar_list > .line > .schedule_line_color > div {
+  width: 10px;
+  height: 10px;
+}
+#calendar_list > .line > .schedule_line_name {
+  width: 8vw;
+}
+#calendar_list > .line > .schedule_line_date {
+  width: 25vw;
 }
