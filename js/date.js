@@ -9,7 +9,7 @@ let today_month = today.getMonth();  // 월 (0~11)
 let today_date = today.getDate();  // 날짜
 
 //일정 테스트용
-let schedule_test
+let schedule_list
     = [
         {name:"first",start:"2021-11-01",end:"2021-11-08",color:"green"},
         {name:"second",start:"2021-11-17",end:"2021-11-21",color:"blue"},
@@ -77,7 +77,7 @@ function init_calendar(){
         if(week_loop === totalWeek){week_end = lastDate;}
 
         //일정 배열 돌리기
-        schedule_test.forEach(schedule => {
+        schedule_list.forEach(schedule => {
             let schedule_start = new Date(schedule.start);
             let schedule_end = new Date(schedule.end);
             //console.log("======================"+schedule.name+"============================");//임시
@@ -160,7 +160,7 @@ function init_calendar(){
 
     //일정 목록
     let calendar_list = ``;
-    schedule_test.forEach(schedule => {
+    schedule_list.forEach(schedule => {
         calendar_list += `
             <div class="line">
                 <div class="schedule_line_color">
@@ -227,10 +227,10 @@ function add_schedule(){
 
     let color_check=false; //색상 중복 체크
 
-    for(let i=0; i<schedule_test.length; i++){
-        console.log("비교값 색상 : "+schedule_test[i].color);
-        console.log("비교 결과 : "+(schedule_name === schedule_test[i].color));
-        if(schedule_color === schedule_test[i].color){
+    for(let i=0; i<schedule_list.length; i++){
+        console.log("비교값 색상 : "+schedule_list[i].color);
+        console.log("비교 결과 : "+(schedule_name === schedule_list[i].color));
+        if(schedule_color === schedule_list[i].color){
             color_check=true;
             break;
         }
@@ -242,7 +242,7 @@ function add_schedule(){
     }
 
     //배열에 저장
-    schedule_test.push(
+    schedule_list.push(
         {
             name : schedule_name,
             start : schedule_start,
